@@ -1,40 +1,38 @@
-using System.Diagnostics.CodeAnalysis;
-
 namespace EccomerceDemo.Domain.Primitives;
 
-public abstract class Entity : IEqualityComparer<Entity>
+public abstract class Entity<TId> : IEquatable<Entity<TId>>
+    where TId : notnull
 {
-    protected Entity() { }
+    public TId Id { get; protected set; }
 
-    protected Entity(Guid id)
+    protected Entity(TId id)
     {
         Id = id;
     }
 
-    public Guid Id { get; protected init; }
+    public override bool Equals(object? obj)
+    {
+        return obj is Entity<TId> entity &&
+               Id.Equals(entity.Id);
+    }
+
+    public bool Equals(Entity<TId>? other)
+    {
+        return Equals((object?)other);
+    }
+
+    public static bool operator ==(Entity<TId>? left, Entity<TId>? right)
+    {
+        return Equals(left, right);
+    }
+
+    public static bool operator !=(Entity<TId>? left, Entity<TId>? right)
+    {
+        return !Equals(left, right);
+    }
 
     public override int GetHashCode()
     {
-        return Id.GetHashCode() * 397;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        if (obj is null) return false;
-        if (obj.GetType() != GetType()) return false;
-        if (obj is not Entity other) return false;
-        return Id == other.Id;
-    }
-
-    public bool Equals(Entity? x, Entity? y)
-    {
-        if (x is null && y is null) return true;
-        if (x is null || y is null) return false;
-        return x.Id == y.Id;
-    }
-
-    public int GetHashCode([DisallowNull] Entity obj)
-    {
-        return obj.Id.GetHashCode() * 397;
+        return Id.GetHashCode();
     }
 }
