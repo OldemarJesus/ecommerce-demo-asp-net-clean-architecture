@@ -1,22 +1,18 @@
 
 using EccomerceDemo.Infrastructure;
+using EccomerceDemo.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.Services.AddOpenApi();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddPresentationLayer();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
 app.UseHttpsRedirection();
+app.UsePresentationLayer();
 
 await app.RunAsync();
 

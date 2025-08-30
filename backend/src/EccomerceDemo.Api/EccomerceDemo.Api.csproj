@@ -19,6 +19,7 @@
     <ProjectReference Include="../aspire/Eccomerce.ServiceDefaults/Eccomerce.ServiceDefaults.csproj" />
     <ProjectReference Include="../EccomerceDemo.Application/EccomerceDemo.Application.csproj" />
     <ProjectReference Include="../EccomerceDemo.Infrastructure/EccomerceDemo.Infrastructure.csproj" />
+    <ProjectReference Include="../EccomerceDemo.Presentation/EccomerceDemo.Presentation.csproj" />
   </ItemGroup>
 
 </Project>
