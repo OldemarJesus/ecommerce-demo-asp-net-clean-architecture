@@ -72,6 +72,29 @@ npm start
 
 The API documentation is available at `/swagger` when running in development mode.
 
+```mermaid
+flowchart TD
+	%% User Endpoints
+	subgraph User
+		Register["POST /register<br>RegisterEndpoint"]
+		Login["POST /login<br>LoginEndpoint"]
+		Profile["GET /user/profile<br>ProfileEndpoint"]
+	end
+
+	%% Product Endpoints
+	subgraph Product
+		CreateProduct["POST /create<br>CreateProductEndpoint"]
+	end
+
+	%% Health Endpoint
+	Health["GET /health<br>HealthEndpoint"]
+
+	%% Relationships (if any)
+	Register --> Login
+	Login --> Profile
+	CreateProduct --> Health
+```
+
 ## Contributing
 
 1. Fork the repository
