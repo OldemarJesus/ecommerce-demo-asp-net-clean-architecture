@@ -11,16 +11,28 @@ public class Result
             throw new InvalidOperationException("Invalid result state");
 
         IsSuccess = isSuccess;
-        Error = error;
+        Errors = new List<Error> { error };
+    }
+
+    public Result(bool isSuccess, IEnumerable<Error> errors)
+    {
+        if (isSuccess && errors.Any() ||
+            !isSuccess && !errors.Any())
+            throw new InvalidOperationException("Invalid result state");
+
+        IsSuccess = isSuccess;
+        Errors = errors;
     }
 
     public bool IsSuccess { get; }
-    public Error Error { get; }
+    public IEnumerable<Error> Errors { get; }
     public bool IsFailure => !IsSuccess;
     public static Result Success() => new(true, Error.None);
     public static Result Failure(Error error) => new(false, error);
+    public static Result Failure(IEnumerable<Error> errors) => new(false, errors);
     public static Result<TValue> Success<TValue>(TValue value) => new(value, true, Error.None);
     public static Result<TValue> Failure<TValue>(Error error) => new(default!, false, error);
+    public static Result<TValue> Failure<TValue>(IEnumerable<Error> errors) => new(default!, false, errors);
 }
 
 public class Result<TValue> : Result
@@ -29,6 +41,12 @@ public class Result<TValue> : Result
 
     public Result(TValue value, bool isSuccess, Error error)
         : base(isSuccess, error)
+    {
+        _value = value;
+    }
+
+    public Result(TValue value, bool isSuccess, IEnumerable<Error> errors)
+        : base(isSuccess, errors)
     {
         _value = value;
     }

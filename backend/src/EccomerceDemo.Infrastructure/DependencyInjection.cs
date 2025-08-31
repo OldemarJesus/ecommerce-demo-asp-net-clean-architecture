@@ -1,8 +1,10 @@
 using System.Text;
 
 using EccomerceDemo.Application.Common.Interfaces.Authentication;
+using EccomerceDemo.Application.User.Interfaces;
 using EccomerceDemo.Infrastructure.Common.Authentication;
 using EccomerceDemo.Infrastructure.Persistence;
+using EccomerceDemo.Infrastructure.Repositories;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +35,7 @@ public static class DependencyInjection
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
 
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

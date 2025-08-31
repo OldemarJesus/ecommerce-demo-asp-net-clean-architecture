@@ -8,5 +8,9 @@ public static class DomainError
     {
         public static readonly Error NotFound = new Error("NotFound", "The requested resource was not found.");
         public static readonly Error InvalidParameter = new Error("InvalidParameter", "The provided parameter is invalid.");
+        public static class User
+        {
+            public static readonly Error DuplicateEmail = new Error("DuplicateEmail", "The email address is already in use.");
+        }
     }
 }
