@@ -19,7 +19,8 @@ public class UserRepository : IUserRepository
 
     public async Task AddAsync(User user, CancellationToken cancellationToken)
     {
-        await _dbContext.Users.AddAsync(user, cancellationToken);
+        _dbContext.Users.Add(user);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     public Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)

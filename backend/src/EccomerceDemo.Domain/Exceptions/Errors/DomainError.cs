@@ -11,6 +11,7 @@ public static class DomainError
         public static class User
         {
             public static readonly Error DuplicateEmail = new Error("DuplicateEmail", "The email address is already in use.");
+            public static readonly Error InvalidCredentials = new Error("InvalidCredentials", "The provided credentials are invalid.");
         }
     }
 }
