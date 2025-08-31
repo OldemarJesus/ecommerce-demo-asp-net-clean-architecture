@@ -25,9 +25,8 @@ public sealed class Product : AggregateRoot<ProductId>
         CreatedBy = createdBy;
     }
 
-    public static Product Create(string name, string description, long priceInCents, string currency, UserId createdBy)
+    public static Product Create(string name, string description, Price price, UserId createdBy)
     {
-        var price = Price.Create(priceInCents, currency);
         return new Product(
             ProductId.CreateUnique(),
             name,

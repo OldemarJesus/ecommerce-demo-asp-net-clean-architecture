@@ -1,6 +1,7 @@
 using System.Text;
 
 using EccomerceDemo.Application.Common.Interfaces.Authentication;
+using EccomerceDemo.Application.Product.Interfaces;
 using EccomerceDemo.Application.User.Interfaces;
 using EccomerceDemo.Infrastructure.Common.Authentication;
 using EccomerceDemo.Infrastructure.Persistence;
@@ -26,6 +27,8 @@ public static class DependencyInjection
         services.AddDbContext<EcommerceDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("postgres")));
         
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
 
         return services;
     }
@@ -35,7 +38,6 @@ public static class DependencyInjection
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
 
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-        services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
